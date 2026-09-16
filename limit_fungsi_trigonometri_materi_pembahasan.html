@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi & Pembahasan Limit Fungsi Trigonometri</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#2563eb',
+                            600: '#1d4ed8',
+                            700: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- KaTeX for rendering mathematical expressions -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\(', right: '\\)', display: false},
+                    {left: '\\[', right: '\\]', display: true}
+                ],
+                throwOnError : false
+            });"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .katex-display { margin: 0.75em 0; overflow-x: auto; overflow-y: hidden; padding: 4px 0; }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-200">
+
+    <!-- Header Navbar -->
+    <header class="sticky top-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur border-b border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-brand-600 text-white p-2 rounded-lg flex items-center justify-center shadow-md">
+                    <i class="fa-solid font-bold text-lg">lim</i>
+                </div>
+                <span class="font-bold text-xl tracking-tight text-slate-900 dark:text-white">Limit Trigonometri</span>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <div class="relative hidden sm:block">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="searchInput" onkeyup="filterCards()" placeholder="Cari rumus atau contoh..." 
+                           class="pl-9 pr-4 py-1.5 text-sm bg-slate-100 dark:bg-slate-800 border border-transparent dark:border-slate-700 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-500 w-48 sm:w-64 transition-all">
+                </div>
+                <button onclick="toggleDarkMode()" class="p-2 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                    <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col lg:flex-row gap-8">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="w-full lg:w-64 shrink-0">
+            <div class="sticky top-24 bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700/60 shadow-sm space-y-4">
+                <h3 class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Daftar Isi</h3>
+                <nav class="space-y-1 text-sm font-medium">
+                    <a href="#sifat-dasar" class="flex items-center space-x-2.5 text-slate-700 dark:text-slate-200 hover:text-brand-600 dark:hover:text-brand-400 py-2 px-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 transition">
+                        <i class="fa-solid fa-bookmark text-brand-500 text-xs"></i>
+                        <span>1. Sifat-Sifat Dasar</span>
+                    </a>
+                    <a href="#identitas" class="flex items-center space-x-2.5 text-slate-700 dark:text-slate-200 hover:text-brand-600 dark:hover:text-brand-400 py-2 px-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 transition">
+                        <i class="fa-solid fa-square-root-variable text-brand-500 text-xs"></i>
+                        <span>2. Identitas Pendukung</span>
+                    </a>
+                    <a href="#contoh-soal" class="flex items-center space-x-2.5 text-slate-700 dark:text-slate-200 hover:text-brand-600 dark:hover:text-brand-400 py-2 px-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 transition">
+                        <i class="fa-solid fa-list-check text-brand-500 text-xs"></i>
+                        <span>3. Pembahasan Contoh Soal</span>
+                    </a>
+                    <a href="#kalkulator-cepat" class="flex items-center space-x-2.5 text-slate-700 dark:text-slate-200 hover:text-brand-600 dark:hover:text-brand-400 py-2 px-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 transition">
+                        <i class="fa-solid fa-calculator text-brand-500 text-xs"></i>
+                        <span>4. Cek Hasil Limit ax/bx</span>
+                    </a>
+                </nav>
+
+                <div class="pt-4 border-t border-slate-100 dark:border-slate-700">
+                    <div class="text-xs text-slate-500 dark:text-slate-400 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span>Jumlah Soal</span>
+                            <span class="font-bold text-brand-600 dark:text-brand-400">14 Soal</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span>Kategori</span>
+                            <span class="font-bold text-slate-700 dark:text-slate-300">Lengkap</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 space-y-10 min-w-0">
+
+            <!-- Hero Banner -->
+            <div class="bg-gradient-to-r from-brand-600 to-indigo-700 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 opacity-10 text-white pointer-events-none">
+                    <i class="fa-solid fa-wave-square text-9xl"></i>
+                </div>
+                <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur rounded-full text-xs font-semibold mb-3 tracking-wide">Rangkuman Matematika Peminatan</span>
+                <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-2">Limit Fungsi Trigonometri</h1>
+                <p class="text-brand-100 text-sm sm:text-base max-w-2xl leading-relaxed">
+                    Panduan ringkas, padat, dan intuitif mencakup sifat-sifat dasar, rumus identitas trigonometri pendukung, hingga penyelesaian contoh soal tipe pemula sampai tingkat lanjut.
+                </p>
+            </div>
+
+            <!-- Section 1: Sifat-Sifat Dasar -->
+            <section id="sifat-dasar" class="scroll-mt-24 space-y-6">
+                <div class="flex items-center space-x-3 border-b border-slate-200 dark:border-slate-800 pb-3">
+                    <div class="p-2 bg-brand-100 dark:bg-brand-900/50 text-brand-600 dark:text-brand-400 rounded-xl">
+                        <i class="fa-solid fa-book-open text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900 dark:text-white">I. Sifat-Sifat Dasar Limit Trigonometri</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Rumus utama untuk mendekati nilai $x \to 0$</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Basic Property Card 1 -->
+                    <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm hover:shadow-md transition">
+                        <h3 class="text-sm font-semibold text-brand-600 dark:text-brand-400 mb-3 flex items-center justify-between">
+                            <span>1. Limit Utama ($x \to 0$)</span>
+                            <i class="fa-regular fa-star text-xs"></i>
+                        </h3>
+                        <div class="space-y-3 text-sm text-slate-700 dark:text-slate-200">
+                            <div class="p-2.5 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-100 dark:border-slate-800">
+                                $$\lim_{x \to 0} \frac{\sin x}{x} = 1 \quad \iff \quad \lim_{x \to 0} \frac{x}{\sin x} = 1$$
+                            </div>
+                            <div class="p-2.5 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-100 dark:border-slate-800">
+                                $$\lim_{x \to 0} \cos x = 1$$
+                            </div>
+                            <div class="p-2.5 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-100 dark:border-slate-800">
+                                $$\lim_{x \to 0} \frac{\tan x}{x} = 1 \quad \iff \quad \lim_{x \to 0} \frac{x}{\tan x} = 1$$
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Basic Property Card 2 -->
+                    <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm hover:shadow-md transition">
+                        <h3 class="text-sm font-semibold text-brand-600 dark:text-brand-400 mb-3 flex items-center justify-between">
+                            <span>2. Pengembangan Koefisien Variable ($ax$ & $bx$)</span>
+                            <i class="fa-solid fa-layer-group text-xs"></i>
+                        </h3>
+                        <div class="space-y-2 text-xs sm:text-sm text-slate-700 dark:text-slate-200">
+                            <div class="p-2 bg-slate-50 dark:bg-slate-900/50 rounded-lg">
+                                $$\lim_{x \to 0} \frac{\sin ax}{bx} = \frac{a}{b} \quad \iff \quad \lim_{x \to 0} \frac{ax}{\sin bx} = \frac{a}{b}$$
+                            </div>
+                            <div class="p-2 bg-slate-50 dark:bg-slate-900/50 rounded-lg">
+                                $$\lim_{x \to 0} \frac{\tan ax}{bx} = \frac{a}{b} \quad \iff \quad \lim_{x \to 0} \frac{ax}{\tan bx} = \frac{a}{b}$$
+                            </div>
+                            <div class="p-2 bg-slate-50 dark:bg-slate-900/50 rounded-lg">
+                                $$\lim_{x \to 0} \frac{\sin ax}{\sin bx} = \frac{a}{b} \quad \iff \quad \lim_{x \to 0} \frac{\sin ax}{\tan bx} = \frac{a}{b}$$
+                            </div>
+                            <div class="p-2 bg-slate-50 dark:bg-slate-900/50 rounded-lg">
+                                $$\lim_{x \to 0} \frac{\tan ax}{\tan bx} = \frac{a}{b} \quad \iff \quad \lim_{x \to 0} \frac{\tan ax}{\sin bx} = \frac{a}{b}$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Identitas Trigonometri Pendukung -->
+            <section id="identitas" class="scroll-mt-24 space-y-6">
+                <div class="flex items-center space-x-3 border-b border-slate-200 dark:border-slate-800 pb-3">
+                    <div class="p-2 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 rounded-xl">
+                        <i class="fa-solid fa-square-root-variable text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900 dark:text-white">II. Rumus Identitas Trigonometri Pendukung</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Esensial untuk mengubah bentuk tak tentu $\left(\frac{0}{0}\right)$</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Identity Card 1 -->
+                    <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm">
+                        <h3 class="font-bold text-slate-800 dark:text-slate-100 text-sm mb-2 border-b border-slate-100 dark:border-slate-700 pb-2">
+                            1. Identitas Pythagoras
+                        </h3>
+                        <ul class="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
+                            <li class="p-1 bg-slate-50 dark:bg-slate-900/40 rounded">$$\sin^2 x + \cos^2 x = 1$$</li>
+                            <li class="p-1 bg-slate-50 dark:bg-slate-900/40 rounded">$$1 - \sin^2 x = \cos^2 x$$</li>
+                            <li class="p-1 bg-slate-50 dark:bg-slate-900/40 rounded">$$1 - \cos^2 x = \sin^2 x$$</li>
+                            <li class="p-1 bg-slate-50 dark:bg-slate-900/40 rounded">$$1 + \tan^2 x = \sec^2 x$$</li>
+                            <li class="p-1 bg-slate-50 dark:bg-slate-900/40 rounded">$$1 + \cot^2 x = \csc^2 x$$</li>
+                        </ul>
+                    </div>
+
+                    <!-- Identity Card 2 -->
+                    <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm">
+                        <h3 class="font-bold text-slate-800 dark:text-slate-100 text-sm mb-2 border-b border-slate-100 dark:border-slate-700 pb-2">
+                            2. Sudut Ganda & Paruh
+                        </h3>
+                        <ul class="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
+                            <li class="p-1 bg-slate-50 dark:bg-slate-900/40 rounded">$$\sin 2x = 2\sin x \cos x$$</li>
+                            <li class="p-1 bg-slate-50 dark:bg-slate-900/40 rounded">$$\cos 2x = \cos^2 x - \sin^2 x$$</li>
+                            <li class="p-1 bg-slate-50 dark:bg-slate-900/40 rounded">$$\cos 2x = 2\cos^2 x - 1$$</li>
+                            <li class="p-1 bg-slate-50 dark:bg-slate-900/40 rounded">$$\cos 2x = 1 - 2\sin^2 x$$</li>
+                            <li class="p-1 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/50 rounded font-semibold text-amber-800 dark:text-amber-300">
+                                $$1 - \cos ax = 2\sin^2\left(\frac{1}{2}ax\right)$$
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Identity Card 3 -->
+                    <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm">
+                        <h3 class="font-bold text-slate-800 dark:text-slate-100 text-sm mb-2 border-b border-slate-100 dark:border-slate-700 pb-2">
+                            3. Penjumlahan & Selisih
+                        </h3>
+                        <ul class="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
+                            <li class="p-1 bg-slate-50 dark:bg-slate-900/40 rounded">$$\sin x + \sin y = 2\sin\frac{x+y}{2}\cos\frac{x-y}{2}$$</li>
+                            <li class="p-1 bg-slate-50 dark:bg-slate-900/40 rounded">$$\sin x - \sin y = 2\cos\frac{x+y}{2}\sin\frac{x-y}{2}$$</li>
+                            <li class="p-1 bg-slate-50 dark:bg-slate-900/40 rounded">$$\cos x + \cos y = 2\cos\frac{x+y}{2}\cos\frac{x-y}{2}$$</li>
+                            <li class="p-1 bg-slate-50 dark:bg-slate-900/40 rounded text-rose-600 dark:text-rose-400 font-semibold">$$\cos x - \cos y = -2\sin\frac{x+y}{2}\sin\frac{x-y}{2}$$</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Contoh Soal & Pembahasan -->
+            <section id="contoh-soal" class="scroll-mt-24 space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3 gap-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="p-2 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-xl">
+                            <i class="fa-solid fa-list-check text-xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-900 dark:text-white">III. Metode & Pembahasan Contoh Soal</h2>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Pembahasan runtut per kategori soal</p>
+                        </div>
+                    </div>
+
+                    <!-- Category Filter Buttons -->
+                    <div class="flex flex-wrap gap-1.5" id="filterContainer">
+                        <button onclick="filterType('all')" class="type-btn active text-xs font-semibold px-3 py-1.5 rounded-lg bg-brand-600 text-white shadow-sm transition">Semua</button>
+                        <button onclick="filterType('substitusi')" class="type-btn text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition">Substitusi</button>
+                        <filter button onclick="filterType('faktorisasi')" class="type-btn text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition">Faktorisasi</button>
+                        <button onclick="filterType('sifat')" class="type-btn text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition">Sifat Dasar</button>
+                        <button onclick="filterType('tak-hingga')" class="type-btn text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition">Tak Hingga</button>
+                        <button onclick="filterType('aljabar')" class="type-btn text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition">L'Hopital / Aljabar</button>
+                    </div>
+                </div>
+
+                <!-- Soal Container -->
+                <div class="space-y-4" id="problemList">
+
+                    <!-- Contoh 1 -->
+                    <div class="problem-card bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/60 p-5 shadow-sm space-y-3" data-type="substitusi" data-keywords="substitusi sin cos tan pi/4 45">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 rounded-md">Tipe 1: Substitusi Langsung</span>
+                            <span class="text-xs text-slate-400 font-mono">Soal #1</span>
+                        </div>
+                        <div class="font-medium text-slate-900 dark:text-white">
+                            Hitung nilai limit berikut:
+                            $$\lim_{x \to \frac{\pi}{4}} \frac{\sin(-x) + \cos x}{\tan x}$$
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 dark:border-slate-700/50 text-sm text-slate-600 dark:text-slate-300 space-y-2">
+                            <div class="font-semibold text-brand-600 dark:text-brand-400 text-xs uppercase tracking-wide">Pembahasan:</div>
+                            <p>Substitusikan nilai $x = \frac{\pi}{4} = 45^\circ$ secara langsung:</p>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl space-y-1 font-mono text-xs sm:text-sm">
+                                <p>$$\lim_{x \to \frac{\pi}{4}} \frac{\sin(-45^\circ) + \cos(45^\circ)}{\tan(45^\circ)}$$</p>
+                                <p>Gunakan relasi kuadran IV: $\sin(-x) = -\sin x$</p>
+                                <p>$$= \frac{-\sin(45^\circ) + \cos(45^\circ)}{\tan(45^\circ)} = \frac{-\frac{1}{2}\sqrt{2} + \frac{1}{2}\sqrt{2}}{1} = \frac{0}{1} = 0$$</p>
+                            </div>
+                            <div class="text-xs text-emerald-600 dark:text-emerald-400 font-bold">Hasil Akhir = 0</div>
+                        </div>
+                    </div>
+
+                    <!-- Contoh 2 -->
+                    <div class="problem-card bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/60 p-5 shadow-sm space-y-3" data-type="substitusi" data-keywords="substitusi sin cos^2 pi/4 sqrt 2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 rounded-md">Tipe 1: Substitusi Langsung</span>
+                            <span class="text-xs text-slate-400 font-mono">Soal #2</span>
+                        </div>
+                        <div class="font-medium text-slate-900 dark:text-white">
+                            Hitung nilai limit berikut:
+                            $$\lim_{x \to \frac{\pi}{4}} \frac{\sin x}{1 - \cos^2 x}$$
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 dark:border-slate-700/50 text-sm text-slate-600 dark:text-slate-300 space-y-2">
+                            <div class="font-semibold text-brand-600 dark:text-brand-400 text-xs uppercase tracking-wide">Pembahasan:</div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl space-y-1 text-xs sm:text-sm">
+                                <p>$$\lim_{x \to \frac{\pi}{4}} \frac{\sin 45^\circ}{1 - \cos^2 45^\circ} = \frac{\frac{1}{2}\sqrt{2}}{1 - \left(\frac{1}{2}\sqrt{2}\right)^2}$$</p>
+                                <p>$$= \frac{\frac{1}{2}\sqrt{2}}{1 - \frac{2}{4}} = \frac{\frac{1}{2}\sqrt{2}}{\frac{1}{2}} = \sqrt{2}$$</p>
+                            </div>
+                            <div class="text-xs text-emerald-600 dark:text-emerald-400 font-bold">Hasil Akhir = $\sqrt{2}$</div>
+                        </div>
+                    </div>
+
+                    <!-- Contoh 3 -->
+                    <div class="problem-card bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/60 p-5 shadow-sm space-y-3" data-type="faktorisasi" data-keywords="faktorisasi 1-sin^2x pi/2 selisih kuadrat">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-400 rounded-md">Tipe 2: Faktorisasi & Identitas</span>
+                            <span class="text-xs text-slate-400 font-mono">Soal #3</span>
+                        </div>
+                        <div class="font-medium text-slate-900 dark:text-white">
+                            Hitung nilai limit berikut:
+                            $$\lim_{x \to \frac{\pi}{2}} \frac{1 - \sin^2 x}{1 - \sin x}$$
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 dark:border-slate-700/50 text-sm text-slate-600 dark:text-slate-300 space-y-2">
+                            <div class="font-semibold text-brand-600 dark:text-brand-400 text-xs uppercase tracking-wide">Pembahasan:</div>
+                            <p class="text-xs text-amber-600 dark:text-amber-400">Substitusi langsung $x = 90^\circ$ menghasilkan $\frac{0}{0}$ (Tak tentu).</p>
+                            <p>Gunakan faktorisasi selisih kuadrat $a^2 - b^2 = (a-b)(a+b)$:</p>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl space-y-1 text-xs sm:text-sm">
+                                <p>$$1 - \sin^2 x = (1 - \sin x)(1 + \sin x)$$</p>
+                                <p>$$\lim_{x \to \frac{\pi}{2}} \frac{(1 - \sin x)(1 + \sin x)}{1 - \sin x} = \lim_{x \to \frac{\pi}{2}} (1 + \sin x)$$</p>
+                                <p>$$= 1 + \sin\left(\frac{\pi}{2}\right) = 1 + 1 = 2$$</p>
+                            </div>
+                            <div class="text-xs text-emerald-600 dark:text-emerald-400 font-bold">Hasil Akhir = 2</div>
+                        </div>
+                    </div>
+
+                    <!-- Contoh 4 -->
+                    <div class="problem-card bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/60 p-5 shadow-sm space-y-3" data-type="faktorisasi" data-keywords="faktorisasi cos x - cos 3x 1-cos 2x selisih cosinus">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-400 rounded-md">Tipe 2: Faktorisasi & Identitas</span>
+                            <span class="text-xs text-slate-400 font-mono">Soal #4</span>
+                        </div>
+                        <div class="font-medium text-slate-900 dark:text-white">
+                            Hitung nilai limit berikut:
+                            $$\lim_{x \to 0} \frac{\cos x - \cos 3x}{1 - \cos 2x}$$
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 dark:border-slate-700/50 text-sm text-slate-600 dark:text-slate-300 space-y-2">
+                            <div class="font-semibold text-brand-600 dark:text-brand-400 text-xs uppercase tracking-wide">Pembahasan:</div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl space-y-2 text-xs sm:text-sm">
+                                <p>Ubah pembilang dengan rumus $\cos x - \cos y = -2\sin\frac{x+y}{2}\sin\frac{x-y}{2}$:</p>
+                                <p>$$\cos x - \cos 3x = -2\sin(2x)\sin(-x) = 2\sin(2x)\sin x$$</p>
+                                <p>Ubah penyebut: $1 - \cos 2x = 2\sin^2 x$</p>
+                                <p>$$\lim_{x \to 0} \frac{2\sin(2x)\sin x}{2\sin^2 x} = \lim_{x \to 0} \frac{\sin(2x)}{\sin x} = \frac{2}{1} = 2$$</p>
+                            </div>
+                            <div class="text-xs text-emerald-600 dark:text-emerald-400 font-bold">Hasil Akhir = 2</div>
+                        </div>
+                    </div>
+
+                    <!-- Contoh 5 -->
+                    <div class="problem-card bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/60 p-5 shadow-sm space-y-3" data-type="faktorisasi" data-keywords="faktorisasi sin 1/2x cos 1/2x sudut paruh">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-400 rounded-md">Tipe 2: Faktorisasi & Identitas</span>
+                            <span class="text-xs text-slate-400 font-mono">Soal #5</span>
+                        </div>
+                        <div class="font-medium text-slate-900 dark:text-white">
+                            Hitung nilai limit berikut:
+                            $$\lim_{x \to \frac{\pi}{2}} \frac{\left(\sin \frac{1}{2}x - \cos \frac{1}{2}x\right)^2}{1 - \sin^2 x}$$
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 dark:border-slate-700/50 text-sm text-slate-600 dark:text-slate-300 space-y-2">
+                            <div class="font-semibold text-brand-600 dark:text-brand-400 text-xs uppercase tracking-wide">Pembahasan:</div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl space-y-2 text-xs sm:text-sm">
+                                <p>Jabarkan pembilang:</p>
+                                <p>$$\left(\sin \frac{1}{2}x - \cos \frac{1}{2}x\right)^2 = \underbrace{\sin^2\frac{1}{2}x + \cos^2\frac{1}{2}x}_{1} - \underbrace{2\sin\frac{1}{2}x\cos\frac{1}{2}x}_{\sin x} = 1 - \sin x$$</p>
+                                <p>Faktorkan penyebut: $1 - \sin^2 x = (1 - \sin x)(1 + \sin x)$</p>
+                                <p>$$\lim_{x \to \frac{\pi}{2}} \frac{1 - \sin x}{(1 - \sin x)(1 + \sin x)} = \lim_{x \to \frac{\pi}{2}} \frac{1}{1 + \sin x} = \frac{1}{1 + 1} = \frac{1}{2}$$</p>
+                            </div>
+                            <div class="text-xs text-emerald-600 dark:text-emerald-400 font-bold">Hasil Akhir = $\frac{1}{2}$</div>
+                        </div>
+                    </div>
+
+                    <!-- Contoh 6 -->
+                    <div class="problem-card bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/60 p-5 shadow-sm space-y-3" data-type="sifat" data-keywords="sifat dasar 3x-sin2x 4x-tan3x bagi x">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-400 rounded-md">Tipe 3: Sifat Dasar & Bagi Variabel</span>
+                            <span class="text-xs text-slate-400 font-mono">Soal #6</span>
+                        </div>
+                        <div class="font-medium text-slate-900 dark:text-white">
+                            Hitung nilai limit berikut:
+                            $$\lim_{x \to 0} \frac{3x - \sin 2x}{4x - \tan 3x}$$
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 dark:border-slate-700/50 text-sm text-slate-600 dark:text-slate-300 space-y-2">
+                            <div class="font-semibold text-brand-600 dark:text-brand-400 text-xs uppercase tracking-wide">Pembahasan:</div>
+                            <p>Kalikan pembilang dan penyebut dengan $\frac{1}{x}$:</p>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl space-y-1 text-xs sm:text-sm">
+                                <p>$$\lim_{x \to 0} \frac{\frac{3x}{x} - \frac{\sin 2x}{x}}{\frac{4x}{x} - \frac{\tan 3x}{x}} = \frac{3 - \lim_{x \to 0} \frac{\sin 2x}{x}}{4 - \lim_{x \to 0} \frac{\tan 3x}{x}}$$</p>
+                                <p>$$= \frac{3 - 2}{4 - 3} = \frac{1}{1} = 1$$</p>
+                            </div>
+                            <div class="text-xs text-emerald-600 dark:text-emerald-400 font-bold">Hasil Akhir = 1</div>
+                        </div>
+                    </div>
+
+                    <!-- Contoh 7 -->
+                    <div class="problem-card bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/60 p-5 shadow-sm space-y-3" data-type="sifat" data-keywords="sifat dasar sin 4x cos 5x tan 1/2x">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-400 rounded-md">Tipe 3: Sifat Dasar & Pemisahan</span>
+                            <span class="text-xs text-slate-400 font-mono">Soal #7</span>
+                        </div>
+                        <div class="font-medium text-slate-900 dark:text-white">
+                            Hitung nilai limit berikut:
+                            $$\lim_{x \to 0} \frac{\sin 4x \cdot \cos 5x}{2 \tan \frac{1}{2}x}$$
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 dark:border-slate-700/50 text-sm text-slate-600 dark:text-slate-300 space-y-2">
+                            <div class="font-semibold text-brand-600 dark:text-brand-400 text-xs uppercase tracking-wide">Pembahasan:</div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl space-y-1 text-xs sm:text-sm">
+                                <p>Pisahkan konstanta dan $\cos 5x$:</p>
+                                <p>$$= \frac{1}{2} \cdot \left(\lim_{x \to 0} \frac{\sin 4x}{\tan \frac{1}{2}x}\right) \cdot \left(\lim_{x \to 0} \cos 5x\right)$$</p>
+                                <p>$$= \frac{1}{2} \cdot \left(\frac{4}{\frac{1}{2}}\right) \cdot \cos(0) = \frac{1}{2} \cdot 8 \cdot 1 = 4$$</p>
+                            </div>
+                            <div class="text-xs text-emerald-600 dark:text-emerald-400 font-bold">Hasil Akhir = 4</div>
+                        </div>
+                    </div>
+
+                    <!-- Contoh 8 -->
+                    <div class="problem-card bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/60 p-5 shadow-sm space-y-3" data-type="sifat" data-keywords="sifat dasar tan 2t tan 3t 3t^2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-400 rounded-md">Tipe 3: Sifat Dasar</span>
+                            <span class="text-xs text-slate-400 font-mono">Soal #8</span>
+                        </div>
+                        <div class="font-medium text-slate-900 dark:text-white">
+                            Hitung nilai limit berikut:
+                            $$\lim_{t \to 0} \frac{\tan 2t \cdot \tan 3t}{3t^2}$$
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 dark:border-slate-700/50 text-sm text-slate-600 dark:text-slate-300 space-y-2">
+                            <div class="font-semibold text-brand-600 dark:text-brand-400 text-xs uppercase tracking-wide">Pembahasan:</div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl space-y-1 text-xs sm:text-sm">
+                                <p>Pecah penyebut $3t^2 = 3 \cdot t \cdot t$:</p>
+                                <p>$$= \frac{1}{3} \cdot \left(\lim_{t \to 0} \frac{\tan 2t}{t}\right) \cdot \left(\lim_{t \to 0} \frac{\tan 3t}{t}\right) = \frac{1}{3} \cdot 2 \cdot 3 = 2$$</p>
+                            </div>
+                            <div class="text-xs text-emerald-600 dark:text-emerald-400 font-bold">Hasil Akhir = 2</div>
+                        </div>
+                    </div>
+
+                    <!-- Contoh 9 -->
+                    <div class="problem-card bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/60 p-5 shadow-sm space-y-3" data-type="tak-hingga" data-keywords="tak hingga infinity 3x sin(1/x) y=1/x">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-400 rounded-md">Tipe 4: Limit Tak Hingga ($x \to \infty$)</span>
+                            <span class="text-xs text-slate-400 font-mono">Soal #9</span>
+                        </div>
+                        <div class="font-medium text-slate-900 dark:text-white">
+                            Hitung nilai limit berikut:
+                            $$\lim_{x \to \infty} 3x \cdot \sin\left(\frac{1}{x}\right)$$
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 dark:border-slate-700/50 text-sm text-slate-600 dark:text-slate-300 space-y-2">
+                            <div class="font-semibold text-brand-600 dark:text-brand-400 text-xs uppercase tracking-wide">Pembahasan:</div>
+                            <p>Gunakan pemisalan $y = \frac{1}{x} \implies x = \frac{1}{y}$. Saat $x \to \infty$, maka $y \to 0$.</p>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl space-y-1 text-xs sm:text-sm">
+                                <p>$$\lim_{y \to 0} 3 \cdot \left(\frac{1}{y}\right) \cdot \sin y = \lim_{y \to 0} 3 \cdot \frac{\sin y}{y} = 3 \cdot 1 = 3$$</p>
+                            </div>
+                            <div class="text-xs text-emerald-600 dark:text-emerald-400 font-bold">Hasil Akhir = 3</div>
+                        </div>
+                    </div>
+
+                    <!-- Contoh 10 -->
+                    <div class="problem-card bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/60 p-5 shadow-sm space-y-3" data-type="tak-hingga" data-keywords="tak hingga infinity sin^2(6/x) sin(4/x) tan(3/x)">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-400 rounded-md">Tipe 4: Limit Tak Hingga ($x \to \infty$)</span>
+                            <span class="text-xs text-slate-400 font-mono">Soal #10</span>
+                        </div>
+                        <div class="font-medium text-slate-900 dark:text-white">
+                            Hitung nilai limit berikut:
+                            $$\lim_{x \to \infty} \frac{3 \sin^2\left(\frac{6}{x}\right)}{\sin\left(\frac{4}{x}\right) \tan\left(\frac{3}{x}\right)}$$
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 dark:border-slate-700/50 text-sm text-slate-600 dark:text-slate-300 space-y-2">
+                            <div class="font-semibold text-brand-600 dark:text-brand-400 text-xs uppercase tracking-wide">Pembahasan:</div>
+                            <p>Misal $y = \frac{1}{x}$. Saat $x \to \infty$, $y \to 0$. Limit menjadi:</p>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl space-y-1 text-xs sm:text-sm">
+                                <p>$$\lim_{y \to 0} \frac{3 \sin(6y) \cdot \sin(6y)}{\sin(4y) \cdot \tan(3y)} = 3 \cdot \left(\frac{6}{4}\right) \cdot \left(\frac{6}{3}\right)$$</p>
+                                <p>$$= 3 \cdot \frac{3}{2} \cdot 2 = 9$$</p>
+                            </div>
+                            <div class="text-xs text-emerald-600 dark:text-emerald-400 font-bold">Hasil Akhir = 9</div>
+                        </div>
+                    </div>
+
+                    <!-- Contoh 11 -->
+                    <div class="problem-card bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/60 p-5 shadow-sm space-y-3" data-type="sifat" data-keywords="3y - sin 4y 5y + tan 2y bagi y">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-400 rounded-md">Tipe 3: Variabel y</span>
+                            <span class="text-xs text-slate-400 font-mono">Soal #11</span>
+                        </div>
+                        <div class="font-medium text-slate-900 dark:text-white">
+                            Hitung nilai limit berikut:
+                            $$\lim_{y \to 0} \frac{3y - \sin 4y}{5y + \tan 2y}$$
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 dark:border-slate-700/50 text-sm text-slate-600 dark:text-slate-300 space-y-2">
+                            <div class="font-semibold text-brand-600 dark:text-brand-400 text-xs uppercase tracking-wide">Pembahasan:</div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl space-y-1 text-xs sm:text-sm">
+                                <p>Bagi pembilang dan penyebut dengan $y$:</p>
+                                <p>$$\lim_{y \to 0} \frac{\frac{3y}{y} - \frac{\sin 4y}{y}}{\frac{5y}{y} + \frac{\tan 2y}{y}} = \frac{3 - 4}{5 + 2} = -\frac{1}{7}$$</p>
+                            </div>
+                            <div class="text-xs text-emerald-600 dark:text-emerald-400 font-bold">Hasil Akhir = $-\frac{1}{7}$</div>
+                        </div>
+                    </div>
+
+                    <!-- Contoh 12 -->
+                    <div class="problem-card bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/60 p-5 shadow-sm space-y-3" data-type="aljabar" data-keywords="aljabar sistem persamaan f(x) g(x) 2f+g=4 f+2g=6">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-400 rounded-md">Tipe 5: Sistem Persamaan Limit</span>
+                            <span class="text-xs text-slate-400 font-mono">Soal #12</span>
+                        </div>
+                        <div class="font-medium text-slate-900 dark:text-white">
+                            Diketahui $\lim_{x \to a} (2f(x) + g(x)) = 4$ dan $\lim_{x \to a} (f(x) + 2g(x)) = 6$. Tentukan nilai $\lim_{x \to a} (f(x) \cdot g(x))$.
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 dark:border-slate-700/50 text-sm text-slate-600 dark:text-slate-300 space-y-2">
+                            <div class="font-semibold text-brand-600 dark:text-brand-400 text-xs uppercase tracking-wide">Pembahasan:</div>
+                            <p>Misalkan $A = \lim_{x \to a} f(x)$ dan $B = \lim_{x \to a} g(x)$. Buat SPLDV:</p>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl space-y-2 text-xs sm:text-sm">
+                                <p>$$\begin{cases} 2A + B = 4 \\ A + 2B = 6 \end{cases}$$</p>
+                                <p>Eliminasi $B$ (Kalikan persamaan 1 dengan 2):</p>
+                                <p>$$4A + 2B = 8$$</p>
+                                <p>$$A + 2B = 6 \implies 3A = 2 \implies A = \frac{2}{3}$$</p>
+                                <p>Substitusikan $A = \frac{2}{3}$ ke $A + 2B = 6 \implies 2B = \frac{16}{3} \implies B = \frac{8}{3}$</p>
+                                <p>$$A \cdot B = \frac{2}{3} \cdot \frac{8}{3} = \frac{16}{9}$$</p>
+                            </div>
+                            <div class="text-xs text-emerald-600 dark:text-emerald-400 font-bold">Hasil Akhir = $\frac{16}{9}$</div>
+                        </div>
+                    </div>
+
+                    <!-- Contoh 13 -->
+                    <div class="problem-card bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/60 p-5 shadow-sm space-y-3" data-type="aljabar" data-keywords="hopital l'hopital turunan m-nx x-1 = 4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-400 rounded-md">Tipe 5: Aturan L'Hôpital & Pembuat Nol</span>
+                            <span class="text-xs text-slate-400 font-mono">Soal #13</span>
+                        </div>
+                        <div class="font-medium text-slate-900 dark:text-white">
+                            Diketahui $\lim_{x \to 1} \frac{m - nx}{x - 1} = 4$. Tentukan nilai $m$ dan $n$.
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 dark:border-slate-700/50 text-sm text-slate-600 dark:text-slate-300 space-y-2">
+                            <div class="font-semibold text-brand-600 dark:text-brand-400 text-xs uppercase tracking-wide">Pembahasan:</div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl space-y-2 text-xs sm:text-sm">
+                                <p>1. Karena penyebut untuk $x = 1$ bernilai $1 - 1 = 0$ dan limit terdefinisi ($4$), maka pembilang harus nol:</p>
+                                <p>$$m - n(1) = 0 \implies m = n$$</p>
+                                <p>2. Turunkan pembilang dan penyebut (Aturan L'Hôpital):</p>
+                                <p>$$\lim_{x \to 1} \frac{\frac{d}{dx}(m - nx)}{\frac{d}{dx}(x - 1)} = \frac{-n}{1} = -n$$</p>
+                                <p>$$ -n = 4 \implies n = -4 \quad \implies m = -4$$</p>
+                            </div>
+                            <div class="text-xs text-emerald-600 dark:text-emerald-400 font-bold">Hasil Akhir: $m = -4, n = -4$</div>
+                        </div>
+                    </div>
+
+                    <!-- Contoh 14 -->
+                    <div class="problem-card bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/60 p-5 shadow-sm space-y-3" data-type="tak-hingga" data-keywords="tak hingga polinomial 15t^2+5t t^2+t+5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-400 rounded-md">Tipe 4: Limit Polinomial Tak Hingga</span>
+                            <span class="text-xs text-slate-400 font-mono">Soal #14</span>
+                        </div>
+                        <div class="font-medium text-slate-900 dark:text-white">
+                            Hitung nilai limit berikut:
+                            $$\lim_{t \to \infty} \frac{15t^2 + 5t}{t^2 + t + 5}$$
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 dark:border-slate-700/50 text-sm text-slate-600 dark:text-slate-300 space-y-2">
+                            <div class="font-semibold text-brand-600 dark:text-brand-400 text-xs uppercase tracking-wide">Pembahasan:</div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl space-y-1 text-xs sm:text-sm">
+                                <p>Bagi dengan pangkat tertinggi ($t^2$):</p>
+                                <p>$$\lim_{t \to \infty} \frac{\frac{15t^2}{t^2} + \frac{5t}{t^2}}{\frac{t^2}{t^2} + \frac{t}{t^2} + \frac{5}{t^2}} = \frac{15 + 0}{1 + 0 + 0} = 15$$</p>
+                            </div>
+                            <div class="text-xs text-emerald-600 dark:text-emerald-400 font-bold">Hasil Akhir = 15</div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Section 4: Kalkulator / Cek Hasil Cepat -->
+            <section id="kalkulator-cepat" class="scroll-mt-24 space-y-4">
+                <div class="bg-gradient-to-br from-slate-900 to-brand-950 text-white rounded-3xl p-6 sm:p-8 shadow-lg border border-slate-800">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="p-2.5 bg-brand-500/20 text-brand-400 rounded-xl border border-brand-500/30">
+                            <i class="fa-solid fa-calculator text-xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-bold">Kalkulator Cepat Limit Bentuk $\frac{\sin ax}{\sin bx}$ atau $\frac{\tan ax}{bx}$</h2>
+                            <p class="text-xs text-slate-400">Masukkan nilai koefisien $a$ dan $b$ untuk mengecek rasio secara instan.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Koefisien Pembilang ($a$)</label>
+                            <input type="number" id="coeffA" value="6" oninput="calculateRatio()" class="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Koefisien Penyebut ($b$)</label>
+                            <input type="number" id="coeffB" value="3" oninput="calculateRatio()" class="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm">
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-slate-800/80 rounded-2xl border border-slate-700/60 flex items-center justify-between">
+                        <span class="text-sm font-medium text-slate-300">Hasil Nilai Limit:</span>
+                        <span id="calcResult" class="text-2xl font-extrabold text-brand-400">2</span>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-16 border-t border-slate-200 dark:border-slate-800 py-8 bg-white dark:bg-slate-900 text-center text-xs text-slate-500 dark:text-slate-400">
+        <p>Rangkuman Belajar Limit Fungsi Trigonometri &bull; Format Pembelajaran Ringkas & Detail</p>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.className = 'fa-solid fa-moon text-lg';
+            } else {
+                html.classList.add('dark');
+                icon.className = 'fa-solid fa-sun text-lg text-amber-400';
+            }
+        }
+
+        // Live Search Filter
+        function filterCards() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.problem-card');
+            
+            cards.forEach(card => {
+                const keywords = card.getAttribute('data-keywords').toLowerCase();
+                const text = card.innerText.toLowerCase();
+                if (keywords.includes(query) || text.includes(query)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Category Filter Buttons
+        function filterType(type) {
+            const cards = document.querySelectorAll('.problem-card');
+            const btns = document.querySelectorAll('.type-btn');
+
+            btns.forEach(btn => {
+                btn.classList.remove('bg-brand-600', 'text-white');
+                btn.classList.add('bg-slate-200', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+            });
+            event.target.classList.add('bg-brand-600', 'text-white');
+            event.target.classList.remove('bg-slate-200', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+
+            cards.forEach(card => {
+                if (type === 'all' || card.getAttribute('data-type') === type) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Fast Calculator Ratio
+        function calculateRatio() {
+            const a = parseFloat(document.getElementById('coeffA').value) || 0;
+            const b = parseFloat(document.getElementById('coeffB').value) || 0;
+            const resEl = document.getElementById('calcResult');
+
+            if (b === 0) {
+                resEl.textContent = 'Tak Definisi (b=0)';
+                resEl.className = 'text-xl font-bold text-rose-400';
+            } else {
+                const ratio = a / b;
+                resEl.textContent = Number.isInteger(ratio) ? ratio : ratio.toFixed(3) + ` (${a}/${b})`;
+                resEl.className = 'text-2xl font-extrabold text-brand-400';
+            }
+        }
+    </script>
+</body>
+</html>
